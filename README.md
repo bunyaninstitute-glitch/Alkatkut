@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق الكتكوت - تعليم الحروف العربية</title>
+    <title>تطبيق الكتكوت - تعليم الحروف والحركات العربية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* أنماط CSS - مع الألوان القديمة */
@@ -297,7 +297,7 @@
             width: 100%;
             height: 315px;
             object-fit: cover;
-            background: #222; /* خلفية سوداء للصور التي لا تحمل */
+            background: #222;
         }
         
         .video-overlay {
@@ -399,13 +399,387 @@
             justify-content: center;
         }
         
+        /* قسم الحركات (النسخة الجديدة) */
+        .harakat-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .harakat-intro {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #FFD700;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            line-height: 1.6;
+        }
+        
+        /* تبويبات فرعية في قسم الحركات */
+        .harakat-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 5px;
+            width: fit-content;
+            margin: 0 auto 25px;
+            flex-wrap: wrap;
+        }
+        
+        .harakat-tab {
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            flex-grow: 1;
+            text-align: center;
+            min-width: 110px;
+        }
+        
+        .harakat-tab.active {
+            background: #FF5722;
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.4);
+        }
+        
+        .harakat-content {
+            display: none;
+        }
+        
+        .harakat-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .harakat-song-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+        
+        .harakat-song-section h3 {
+            color: #4FC3F7;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .harakat-song-section h3 i {
+            color: #FFD700;
+            animation: bounce 2s infinite;
+        }
+        
+        .song-video-preview {
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: #000;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .song-video-preview:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .song-video-preview img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: #222;
+        }
+        
+        .song-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .song-video-preview:hover .song-video-overlay {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .song-play-button {
+            background: #FF0000;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        .song-play-button i {
+            font-size: 2rem;
+            color: white;
+            margin-left: 5px;
+        }
+        
+        .song-video-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .current-haraka-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+        
+        .haraka-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .haraka-title {
+            font-size: 2.5rem;
+            color: #4FC3F7;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .haraka-title .symbol {
+            font-size: 3rem;
+            color: #FF5722;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 15px;
+        }
+        
+        .haraka-example-large {
+            font-size: 6rem;
+            margin: 20px 0;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            color: #FFD700;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .haraka-description {
+            font-size: 1.3rem;
+            color: #B388FF;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        /* بطاقات الحروف مع الحركات */
+        .haraka-cards-container {
+            margin: 30px 0;
+        }
+        
+        .haraka-cards-container h3 {
+            color: #4FC3F7;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .harakat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .haraka-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+        }
+        
+        .haraka-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            border-color: #FFD700;
+        }
+        
+        .haraka-card.active {
+            background: rgba(255, 87, 34, 0.3);
+            border-color: #FF5722;
+            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4);
+        }
+        
+        .haraka-card .letter {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        .haraka-card .haraka-letter {
+            font-size: 2.2rem;
+            color: #FF5722;
+            margin-bottom: 5px;
+        }
+        
+        .haraka-card .example {
+            font-size: 1.2rem;
+            color: #4FC3F7;
+        }
+        
+        .haraka-card .example-arabic {
+            font-size: 1.4rem;
+            color: #FFEB3B;
+            margin-top: 5px;
+        }
+        
+        /* قسم لعبة الحركات (التدريب) */
+        .haraka-training-section {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 3px solid #FFD700;
+        }
+        
+        .haraka-training-section h3 {
+            color: #4FC3F7;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .haraka-training-section h3 i {
+            color: #FFD700;
+            animation: bounce 2s infinite;
+        }
+        
+        .game-instruction {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #FFEB3B;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .training-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .letter-to-mark {
+            font-size: 8rem;
+            margin: 20px 0;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            color: #FFD700;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .letter-to-mark:hover {
+            transform: scale(1.05);
+        }
+        
+        .haraka-options {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .haraka-option-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 15px;
+            padding: 25px 35px;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .haraka-option-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .haraka-option-btn.correct {
+            background-color: #4CAF50;
+            animation: pulse 0.5s;
+        }
+        
+        .haraka-option-btn.incorrect {
+            background-color: #F44336;
+        }
+        
+        /* قسم اللعبة */
         .game-section {
             background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 25px;
             width: 100%;
-            max-width: 700px;
+            max-width: 900px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
@@ -655,8 +1029,17 @@
             100% { transform: translateY(-100px) scale(1); opacity: 0; }
         }
         
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
         .celebration {
             animation: pulse 0.5s;
+        }
+        
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
         }
         
         /* تأثيرات القلوب الطائرة والألعاب النارية */
@@ -679,6 +1062,15 @@
             z-index: 1000;
         }
         
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            animation: float 2s linear forwards;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
         /* تصميم متجاوب */
         @media (max-width: 768px) {
             .chick-title {
@@ -689,20 +1081,41 @@
                 font-size: 8rem;
             }
             
+            .haraka-example-large {
+                font-size: 5rem;
+                height: 100px;
+            }
+            
+            .letter-to-mark {
+                font-size: 6rem;
+                width: 150px;
+                height: 150px;
+            }
+            
             .main-content {
                 flex-direction: column;
                 align-items: center;
             }
             
-            .letter-section, .game-section {
+            .letter-section, .game-section, .harakat-section {
                 width: 100%;
+            }
+            
+            .harakat-cards {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .haraka-option-btn {
+                padding: 20px 25px;
+                font-size: 2.5rem;
             }
             
             .game-options {
                 grid-template-columns: 1fr;
             }
             
-            .video-preview img {
+            .video-preview img,
+            .song-video-preview img {
                 height: 250px;
             }
             
@@ -734,10 +1147,14 @@
                 width: 100%;
             }
             
-            .tab {
-                min-width: 100px;
-                padding: 10px 15px;
-                font-size: 1rem;
+            .tab, .harakat-tab {
+                min-width: 90px;
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .harakat-tabs {
+                width: 100%;
             }
         }
         
@@ -750,6 +1167,26 @@
                 font-size: 6rem;
             }
             
+            .haraka-example-large {
+                font-size: 4rem;
+                height: 80px;
+            }
+            
+            .letter-to-mark {
+                font-size: 5rem;
+                width: 120px;
+                height: 120px;
+            }
+            
+            .harakat-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .haraka-option-btn {
+                padding: 15px 20px;
+                font-size: 2rem;
+            }
+            
             .game-option {
                 font-size: 2.5rem;
                 min-height: 100px;
@@ -760,12 +1197,14 @@
                 font-size: 2rem;
             }
             
-            .play-button {
+            .play-button,
+            .song-play-button {
                 width: 60px;
                 height: 60px;
             }
             
-            .play-button i {
+            .play-button i,
+            .song-play-button i {
                 font-size: 2rem;
             }
             
@@ -785,15 +1224,31 @@
                 flex-direction: column;
                 gap: 10px;
             }
+            
+            .tab, .harakat-tab {
+                min-width: 80px;
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+            
+            .song-video-preview img {
+                height: 200px;
+            }
+            
+            .haraka-title {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 5px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- شاشة إدخال اسم الطفل -->
+    <!-- شاشة إدخال الاسم -->
     <div class="name-input-screen" id="name-input-screen">
         <div class="name-input-box">
             <h2><i class="fas fa-child"></i> مرحباً يا صغيري!</h2>
-            <p>ما اسمك الجميل؟ سأستخدمه لتشجيعك أثناء تعلم الحروف</p>
+            <p>ما اسمك الجميل؟ سأستخدمه لتشجيعك أثناء تعلم الحروف والحركات</p>
             <input type="text" id="child-name-input" placeholder="اكتب اسمك هنا..." maxlength="20">
             <button id="start-learning">
                 <i class="fas fa-rocket"></i> ابدأ التعلم
@@ -818,19 +1273,21 @@
                 تطبيق الكتكوت
                 <i class="fas fa-dove chick-icon"></i>
             </h1>
-            <p class="subtitle">هيا نتعلم الحروف العربية معاً بطريقة ممتعة</p>
+            <p class="subtitle">هيا نتعلم الحروف والحركات العربية معاً بطريقة ممتعة</p>
             
             <div class="tabs">
                 <div class="tab active" data-tab="learn">التعلم</div>
+                <div class="tab" data-tab="harakat">الحركات</div>
                 <div class="tab" data-tab="game">اللعبة</div>
                 <div class="tab" data-tab="all-letters">كل الحروف</div>
             </div>
         </header>
         
+        <!-- قسم التعلم -->
         <section class="content-section active" id="learn-section">
             <div class="main-content">
                 <div class="letter-section">
-                    <h2>الحرف اليوم</h2>
+                    <h2><i class="fas fa-graduation-cap"></i> الحرف اليوم</h2>
                     <div class="letter-display" id="current-letter">أ</div>
                     
                     <div class="letter-info">
@@ -870,10 +1327,194 @@
             </div>
         </section>
         
+        <!-- قسم الحركات -->
+        <section class="content-section" id="harakat-section">
+            <div class="main-content">
+                <div class="harakat-section">
+                    <h2><i class="fas fa-music"></i> تعلم الحركات العربية</h2>
+                    <p class="harakat-intro">اختر التبويب المناسب للتدرب على الحركات العربية: الفتحة، الكسرة، أو الضمة.</p>
+                    
+                    <!-- تبويبات فرعية في قسم الحركات -->
+                    <div class="harakat-tabs">
+                        <div class="harakat-tab active" data-harakat-tab="fatha">
+                            <i class="fas fa-arrow-up"></i> الفتحة
+                        </div>
+                        <div class="harakat-tab" data-harakat-tab="kasra">
+                            <i class="fas fa-arrow-down"></i> الكسرة
+                        </div>
+                        <div class="harakat-tab" data-harakat-tab="damma">
+                            <i class="fas fa-arrow-circle-up"></i> الضمة
+                        </div>
+                        <div class="harakat-tab" data-harakat-tab="training">
+                            <i class="fas fa-gamepad"></i> التدريب
+                        </div>
+                    </div>
+                    
+                    <!-- محتوى تبويب الفتحة -->
+                    <div class="harakat-content active" id="fatha-content">
+                        <div class="current-haraka-section">
+                            <div class="haraka-display">
+                                <div class="haraka-title">
+                                    <span>حركة الفتحة</span>
+                                    <span class="symbol">َ</span>
+                                </div>
+                                <div class="haraka-example-large">
+                                    بَ
+                                </div>
+                                <div class="haraka-description">حركة الفتحة: علامة صغيرة فوق الحرف، تنطق الحرف بفتح الفم قليلاً</div>
+                            </div>
+                        </div>
+                        
+                        <div class="harakat-song-section">
+                            <h3><i class="fas fa-music"></i> أنشودة تعليمية</h3>
+                            <div class="song-video-preview">
+                                <img src="https://img.youtube.com/vi/yp1TQimMjqA/maxresdefault.jpg" alt="أنشودة تعليم الفتحة" onerror="this.src='https://img.youtube.com/vi/yp1TQimMjqA/hqdefault.jpg'">
+                                <div class="song-video-overlay">
+                                    <div class="song-play-button">
+                                        <i class="fab fa-youtube"></i>
+                                    </div>
+                                    <div class="song-video-title">أنشودة تعليم الفتحة مع الحروف</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="haraka-cards-container">
+                            <h3><i class="fas fa-font"></i> الحروف العربية مع الفتحة</h3>
+                            <div class="harakat-cards" id="fatha-cards">
+                                <!-- سيتم ملؤها بالبطاقات عبر JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محتوى تبويب الكسرة -->
+                    <div class="harakat-content" id="kasra-content">
+                        <div class="current-haraka-section">
+                            <div class="haraka-display">
+                                <div class="haraka-title">
+                                    <span>حركة الكسرة</span>
+                                    <span class="symbol">ِ</span>
+                                </div>
+                                <div class="haraka-example-large">
+                                    بِ
+                                </div>
+                                <div class="haraka-description">حركة الكسرة: علامة صغيرة تحت الحرف، تنطق الحرف بفتح الفم مع ميل الشفتين</div>
+                            </div>
+                        </div>
+                        
+                        <div class="harakat-song-section">
+                            <h3><i class="fas fa-music"></i> أنشودة تعليمية</h3>
+                            <div class="song-video-preview">
+                                <img src="https://img.youtube.com/vi/6D0b82CpqoE/maxresdefault.jpg" alt="أنشودة تعليم الكسرة" onerror="this.src='https://img.youtube.com/vi/6D0b82CpqoE/hqdefault.jpg'">
+                                <div class="song-video-overlay">
+                                    <div class="song-play-button">
+                                        <i class="fab fa-youtube"></i>
+                                    </div>
+                                    <div class="song-video-title">أنشودة تعليم الكسرة مع الحروف</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="haraka-cards-container">
+                            <h3><i class="fas fa-font"></i> الحروف العربية مع الكسرة</h3>
+                            <div class="harakat-cards" id="kasra-cards">
+                                <!-- سيتم ملؤها بالبطاقات عبر JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محتوى تبويب الضمة -->
+                    <div class="harakat-content" id="damma-content">
+                        <div class="current-haraka-section">
+                            <div class="haraka-display">
+                                <div class="haraka-title">
+                                    <span>حركة الضمة</span>
+                                    <span class="symbol">ُ</span>
+                                </div>
+                                <div class="haraka-example-large">
+                                    بُ
+                                </div>
+                                <div class="haraka-description">حركة الضمة: علامة صغيرة تشبه الواو فوق الحرف، تنطق الحرف بضم الشفتين</div>
+                            </div>
+                        </div>
+                        
+                        <div class="harakat-song-section">
+                            <h3><i class="fas fa-music"></i> أنشودة تعليمية</h3>
+                            <div class="song-video-preview">
+                                <img src="https://img.youtube.com/vi/w3Mn3bJFoA8/maxresdefault.jpg" alt="أنشودة تعليم الضمة" onerror="this.src='https://img.youtube.com/vi/w3Mn3bJFoA8/hqdefault.jpg'">
+                                <div class="song-video-overlay">
+                                    <div class="song-play-button">
+                                        <i class="fab fa-youtube"></i>
+                                    </div>
+                                    <div class="song-video-title">أنشودة تعليم الضمة مع الحروف</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="haraka-cards-container">
+                            <h3><i class="fas fa-font"></i> الحروف العربية مع الضمة</h3>
+                            <div class="harakat-cards" id="damma-cards">
+                                <!-- سيتم ملؤها بالبطاقات عبر JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محتوى تبويب التدريب -->
+                    <div class="harakat-content" id="training-content">
+                        <div class="haraka-training-section">
+                            <h3><i class="fas fa-gamepad"></i> تدريب على وضع الحركات</h3>
+                            <p class="game-instruction" id="game-instruction">
+                                المعلم يقول: ضع الفتحة على هذا الحرف
+                            </p>
+                            
+                            <div class="training-content">
+                                <div class="letter-to-mark" id="letter-to-mark">
+                                    ب
+                                </div>
+                                
+                                <div class="haraka-options" id="haraka-options">
+                                    <button class="haraka-option-btn" data-haraka="fatha">َ</button>
+                                    <button class="haraka-option-btn" data-haraka="kasra">ِ</button>
+                                    <button class="haraka-option-btn" data-haraka="damma">ُ</button>
+                                </div>
+                                
+                                <div class="game-feedback" id="haraka-game-feedback"></div>
+                                
+                                <div class="game-stats">
+                                    <div class="stat">
+                                        <div class="stat-value" id="haraka-game-score">0</div>
+                                        <div class="stat-label">النقاط</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value" id="haraka-correct-answers">0</div>
+                                        <div class="stat-label">الإجابات الصحيحة</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value" id="haraka-total-questions">0</div>
+                                        <div class="stat-label">الأسئلة</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="game-controls">
+                                    <button id="new-haraka-game">
+                                        <i class="fas fa-redo"></i> سؤال جديد
+                                    </button>
+                                    <button id="hear-instruction">
+                                        <i class="fas fa-volume-up"></i> استمع للتعليمات
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- قسم اللعبة -->
         <section class="content-section" id="game-section">
             <div class="main-content">
                 <div class="game-section">
-                    <h2><i class="fas fa-gamepad"></i> لعبة اختيار الحرف الصحيح</h2>
+                    <h2><i class="fas fa-gamepad"></i> لعبة الحروف العربية</h2>
+                    
                     <div class="game-question" id="game-question">ما هو هذا الحرف؟</div>
                     
                     <div class="game-options" id="game-options">
@@ -909,6 +1550,7 @@
             </div>
         </section>
         
+        <!-- قسم كل الحروف -->
         <section class="content-section" id="all-letters-section">
             <div class="main-content">
                 <div class="letter-section">
@@ -1200,6 +1842,102 @@
                 position: 'الحرف الثامن والعشرون في الأبجدية العربية'
             }
         ];
+
+        // بيانات الحروف مع الفتحة والأمثلة
+        const lettersWithFatha = [
+            { letter: 'أ', name: 'الألف', haraka: 'أَ', example: 'أسد', exampleAr: 'أَسَد' },
+            { letter: 'ب', name: 'الباء', haraka: 'بَ', example: 'بيض', exampleAr: 'بَيْض' },
+            { letter: 'ت', name: 'التاء', haraka: 'تَ', example: 'تمر', exampleAr: 'تَمْر' },
+            { letter: 'ث', name: 'الثاء', haraka: 'ثَ', example: 'ثعلب', exampleAr: 'ثَعْلَب' },
+            { letter: 'ج', name: 'الجيم', haraka: 'جَ', example: 'جمل', exampleAr: 'جَمَل' },
+            { letter: 'ح', name: 'الحاء', haraka: 'حَ', example: 'حليب', exampleAr: 'حَلِيب' },
+            { letter: 'خ', name: 'الخاء', haraka: 'خَ', example: 'خروف', exampleAr: 'خَرُوف' },
+            { letter: 'د', name: 'الدال', haraka: 'دَ', example: 'دراجة', exampleAr: 'دَرَّاجَة' },
+            { letter: 'ذ', name: 'الذال', haraka: 'ذَ', example: 'ذهب', exampleAr: 'ذَهَب' },
+            { letter: 'ر', name: 'الراء', haraka: 'رَ', example: 'رمل', exampleAr: 'رَمْل' },
+            { letter: 'ز', name: 'الزاي', haraka: 'زَ', example: 'زرافة', exampleAr: 'زَرَافَة' },
+            { letter: 'س', name: 'السين', haraka: 'سَ', example: 'سيارة', exampleAr: 'سَيَّارَة' },
+            { letter: 'ش', name: 'الشين', haraka: 'شَ', example: 'شمس', exampleAr: 'شَمْس' },
+            { letter: 'ص', name: 'الصاد', haraka: 'صَ', example: 'صقر', exampleAr: 'صَقْر' },
+            { letter: 'ض', name: 'الضاد', haraka: 'ضَ', example: 'ضابط', exampleAr: 'ضَابِط' },
+            { letter: 'ط', name: 'الطاء', haraka: 'طَ', example: 'طائرة', exampleAr: 'طَائِرَة' },
+            { letter: 'ظ', name: 'الظاء', haraka: 'ظَ', example: 'ظرف', exampleAr: 'ظَرْف' },
+            { letter: 'ع', name: 'العين', haraka: 'عَ', example: 'عسل', exampleAr: 'عَسَل' },
+            { letter: 'غ', name: 'الغين', haraka: 'غَ', example: 'غزال', exampleAr: 'غَزَال' },
+            { letter: 'ف', name: 'الفاء', haraka: 'فَ', example: 'فراشة', exampleAr: 'فَرَاشَة' },
+            { letter: 'ق', name: 'القاف', haraka: 'قَ', example: 'قمر', exampleAr: 'قَمَر' },
+            { letter: 'ك', name: 'الكاف', haraka: 'كَ', example: 'كلب', exampleAr: 'كَلْب' },
+            { letter: 'ل', name: 'اللام', haraka: 'لَ', example: 'ليمون', exampleAr: 'لَيْمُون' },
+            { letter: 'م', name: 'الميم', haraka: 'مَ', example: 'مسجد', exampleAr: 'مَسْجِد' },
+            { letter: 'ن', name: 'النون', haraka: 'نَ', example: 'نحلة', exampleAr: 'نَحْلَة' },
+            { letter: 'ه', name: 'الهاء', haraka: 'هَ', example: 'هرم', exampleAr: 'هَرَم' },
+            { letter: 'و', name: 'الواو', haraka: 'وَ', example: 'وردة', exampleAr: 'وَرْدَة' },
+            { letter: 'ي', name: 'الياء', haraka: 'يَ', example: 'يد', exampleAr: 'يَد' }
+        ];
+
+        // بيانات الحروف مع الكسرة والأمثلة
+        const lettersWithKasra = [
+            { letter: 'أ', name: 'الألف', haraka: 'إِ', example: 'إبريق', exampleAr: 'إِبْرِيق' },
+            { letter: 'ب', name: 'الباء', haraka: 'بِ', example: 'بطيخ', exampleAr: 'بِطِّيخ' },
+            { letter: 'ت', name: 'التاء', haraka: 'تِ', example: 'تين', exampleAr: 'تِين' },
+            { letter: 'ث', name: 'الثاء', haraka: 'ثِ', example: 'ثياب', exampleAr: 'ثِيَاب' },
+            { letter: 'ج', name: 'الجيم', haraka: 'جِ', example: 'جمال', exampleAr: 'جِمَال' },
+            { letter: 'ح', name: 'الحاء', haraka: 'حِ', example: 'حصان', exampleAr: 'حِصَان' },
+            { letter: 'خ', name: 'الخاء', haraka: 'خِ', example: 'خيار', exampleAr: 'خِيَار' },
+            { letter: 'د', name: 'الدال', haraka: 'دِ', example: 'ديك', exampleAr: 'دِيك' },
+            { letter: 'ذ', name: 'الذال', haraka: 'ذِ', example: 'ذراع', exampleAr: 'ذِرَاع' },
+            { letter: 'ر', name: 'الراء', haraka: 'رِ', example: 'رجل', exampleAr: 'رِجْل' },
+            { letter: 'ز', name: 'الزاي', haraka: 'زِ', example: 'زر', exampleAr: 'زِرّ' },
+            { letter: 'س', name: 'السين', haraka: 'سِ', example: 'سناج', exampleAr: 'سِنَاج' },
+            { letter: 'ش', name: 'الشين', haraka: 'شِ', example: 'شراع', exampleAr: 'شِرَاع' },
+            { letter: 'ص', name: 'الصاد', haraka: 'صِ', example: 'صفر', exampleAr: 'صِفْر' },
+            { letter: 'ض', name: 'الضاد', haraka: 'ضِ', example: 'ضرس', exampleAr: 'ضِرس' },
+            { letter: 'ط', name: 'الطاء', haraka: 'طِ', example: 'طفل', exampleAr: 'طِفْل' },
+            { letter: 'ظ', name: 'الظاء', haraka: 'ظِ', example: 'ظل', exampleAr: 'ظِل' },
+            { letter: 'ع', name: 'العين', haraka: 'عِ', example: 'عنب', exampleAr: 'عِنَب' },
+            { letter: 'غ', name: 'الغين', haraka: 'غِ', example: 'غربان', exampleAr: 'غِرْبَان' },
+            { letter: 'ف', name: 'الفاء', haraka: 'فِ', example: 'فيل', exampleAr: 'فِيل' },
+            { letter: 'ق', name: 'القاف', haraka: 'قِ', example: 'قرد', exampleAr: 'قِرْد' },
+            { letter: 'ك', name: 'الكاف', haraka: 'كِ', example: 'كتاب', exampleAr: 'كِتَاب' },
+            { letter: 'ل', name: 'اللام', haraka: 'لِ', example: 'لسان', exampleAr: 'لِسَان' },
+            { letter: 'م', name: 'الميم', haraka: 'مِ', example: 'مفتاح', exampleAr: 'مِفْتَاح' },
+            { letter: 'ن', name: 'النون', haraka: 'نِ', example: 'نمر', exampleAr: 'نِمْر' },
+            { letter: 'ه', name: 'الهاء', haraka: 'هِ', example: 'هرة', exampleAr: 'هِرَّة' },
+            { letter: 'و', name: 'الواو', haraka: 'وِ', example: 'وسادة', exampleAr: 'وِسَادَة' },
+            { letter: 'ي', name: 'الياء', haraka: 'يِ', example: 'ياسمين', exampleAr: 'يَاسَمِين' }
+        ];
+
+        // بيانات الحروف مع الضمة والأمثلة
+        const lettersWithDamma = [
+            { letter: 'أ', name: 'الألف', haraka: 'أُ', example: 'أذن', exampleAr: 'أُذُن' },
+            { letter: 'ب', name: 'الباء', haraka: 'بُ', example: 'برتقال', exampleAr: 'بُرْتُقال' },
+            { letter: 'ت', name: 'التاء', haraka: 'تُ', example: 'تفاحة', exampleAr: 'تُفَّاحَة' },
+            { letter: 'ث', name: 'الثاء', haraka: 'ثُ', example: 'ثعبان', exampleAr: 'ثُعْبَان' },
+            { letter: 'ج', name: 'الجيم', haraka: 'جُ', example: 'جبن', exampleAr: 'جُبْن' },
+            { letter: 'ح', name: 'الحاء', haraka: 'حُ', example: 'حوت', exampleAr: 'حُوت' },
+            { letter: 'خ', name: 'الخاء', haraka: 'خُ', example: 'خبز', exampleAr: 'خُبْز' },
+            { letter: 'د', name: 'الدال', haraka: 'دُ', example: 'دب', exampleAr: 'دُب' },
+            { letter: 'ذ', name: 'الذال', haraka: 'ذُ', example: 'ذرة', exampleAr: 'ذُرَّة' },
+            { letter: 'ر', name: 'الراء', haraka: 'رُ', example: 'رمان', exampleAr: 'رُمَّان' },
+            { letter: 'ز', name: 'الزاي', haraka: 'زُ', example: 'زهور', exampleAr: 'زُهُور' },
+            { letter: 'س', name: 'السين', haraka: 'سُ', example: 'سلم', exampleAr: 'سُلَّم' },
+            { letter: 'ش', name: 'الشين', haraka: 'شُ', example: 'شمعة', exampleAr: 'شُمْعَة' },
+            { letter: 'ص', name: 'الصاد', haraka: 'صُ', example: 'صندوق', exampleAr: 'صُنْدُوق' },
+            { letter: 'ض', name: 'الضاد', haraka: 'ضُ', example: 'ضوء', exampleAr: 'ضَوْء' },
+            { letter: 'ط', name: 'الطاء', haraka: 'طُ', example: 'طير', exampleAr: 'طَيْر' },
+            { letter: 'ظ', name: 'الظاء', haraka: 'ظُ', example: 'ظرف', exampleAr: 'ظُرْف' },
+            { letter: 'ع', name: 'العين', haraka: 'عُ', example: 'عكاز', exampleAr: 'عُكَّاز' },
+            { letter: 'غ', name: 'الغين', haraka: 'غُ', example: 'غراب', exampleAr: 'غُرَاب' },
+            { letter: 'ف', name: 'الفاء', haraka: 'فُ', example: 'فستان', exampleAr: 'فُسْتَان' },
+            { letter: 'ق', name: 'القاف', haraka: 'قُ', example: 'قفل', exampleAr: 'قُفْل' },
+            { letter: 'ك', name: 'الكاف', haraka: 'كُ', example: 'كتاب', exampleAr: 'كِتَاب' },
+            { letter: 'ل', name: 'اللام', haraka: 'لُ', example: 'لعبة', exampleAr: 'لُعْبَة' },
+            { letter: 'م', name: 'الميم', haraka: 'مُ', example: 'مهرج', exampleAr: 'مُهَرِّج' },
+            { letter: 'ن', name: 'النون', haraka: 'نُ', example: 'نجوم', exampleAr: 'نُجُوم' },
+            { letter: 'ه', name: 'الهاء', haraka: 'هُ', example: 'هدهد', exampleAr: 'هُدْهُد' },
+            { letter: 'و', name: 'الواو', haraka: 'وُ', example: 'ورد', exampleAr: 'وُرْد' },
+            { letter: 'ي', name: 'الياء', haraka: 'يُ', example: 'يصافح', exampleAr: 'يُصَافِح' }
+        ];
         
         let currentLetterIndex = 0;
         let gameScore = 0;
@@ -1208,6 +1946,12 @@
         let correctAnswer = '';
         let learnedLetters = new Set(['أ']);
         let childName = "صغيري";
+        
+        // متغيرات لعبة الحركات الجديدة
+        let harakaGameScore = 0;
+        let harakaCorrectAnswers = 0;
+        let harakaTotalQuestions = 0;
+        let currentHarakaGame = null;
         
         // عناصر DOM
         const nameInputScreen = document.getElementById('name-input-screen');
@@ -1228,6 +1972,18 @@
         const prevLetterButton = document.getElementById('prev-letter');
         const nextLetterButton = document.getElementById('next-letter');
         
+        // عناصر لعبة وضع الحركات
+        const gameInstructionElement = document.getElementById('game-instruction');
+        const letterToMarkElement = document.getElementById('letter-to-mark');
+        const harakaOptionsButtons = document.querySelectorAll('.haraka-option-btn');
+        const harakaGameFeedbackElement = document.getElementById('haraka-game-feedback');
+        const harakaGameScoreElement = document.getElementById('haraka-game-score');
+        const harakaCorrectAnswersElement = document.getElementById('haraka-correct-answers');
+        const harakaTotalQuestionsElement = document.getElementById('haraka-total-questions');
+        const newHarakaGameButton = document.getElementById('new-haraka-game');
+        const hearInstructionButton = document.getElementById('hear-instruction');
+        
+        // عناصر لعبة الحروف في قسم اللعبة
         const gameQuestionElement = document.getElementById('game-question');
         const gameOptionsElement = document.getElementById('game-options');
         const gameFeedbackElement = document.getElementById('game-feedback');
@@ -1243,6 +1999,10 @@
         const tabs = document.querySelectorAll('.tab');
         const contentSections = document.querySelectorAll('.content-section');
         
+        // تبويبات فرعية في قسم الحركات
+        const harakatTabs = document.querySelectorAll('.harakat-tab');
+        const harakatContents = document.querySelectorAll('.harakat-content');
+        
         // بدء التطبيق عند إدخال الاسم
         startLearningButton.addEventListener('click', () => {
             const name = childNameInput.value.trim();
@@ -1257,7 +2017,10 @@
                     mainApp.classList.remove('hidden');
                     
                     // ترحيب صوتي بالطفل
-                    speakText(`مرحباً ${childName}، أنا سعيد بلقائك! هيا نتعلم الحروف العربية معاً.`);
+                    speakText(`مرحباً ${childName}، أنا سعيد بلقائك! هيا نتعلم الحروف والحركات العربية معاً.`);
+                    
+                    // إضافة تأثير دخول
+                    mainApp.classList.add('slide-up');
                 }, 500);
             } else {
                 alert('من فضلك أدخل اسمك أولاً!');
@@ -1293,10 +2056,144 @@
             // تحديث الحروف المتعلمة في لوحة كل الحروف
             updateAllLettersDisplay();
             
-            // إنشاء لعبة جديدة
+            // إنشاء لعبة جديدة إذا كانت في قسم اللعبة
             if (document.getElementById('game-section').classList.contains('active')) {
                 generateGame();
             }
+        }
+        
+        // إنشاء بطاقات الحروف مع الحركة
+        function createHarakaCards(containerId, lettersData) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            lettersData.forEach((letterData, index) => {
+                const card = document.createElement('div');
+                card.className = 'haraka-card';
+                card.innerHTML = `
+                    <div class="letter">${letterData.letter}</div>
+                    <div class="haraka-letter">${letterData.haraka}</div>
+                    <div class="example">${letterData.example}</div>
+                    <div class="example-arabic">${letterData.exampleAr}</div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    // تأثير عند النقر
+                    card.classList.add('celebration');
+                    setTimeout(() => {
+                        card.classList.remove('celebration');
+                    }, 500);
+                });
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // إنشاء لعبة وضع الحركات
+        function createHarakaGame() {
+            // اختيار حرف عشوائي
+            const randomLetterIndex = Math.floor(Math.random() * arabicLetters.length);
+            const randomLetter = arabicLetters[randomLetterIndex];
+            
+            // اختيار حركة عشوائية
+            const harakat = [
+                { id: 'fatha', name: 'الفتحة', symbol: 'َ' },
+                { id: 'kasra', name: 'الكسرة', symbol: 'ِ' },
+                { id: 'damma', name: 'الضمة', symbol: 'ُ' }
+            ];
+            const randomHaraka = harakat[Math.floor(Math.random() * harakat.length)];
+            
+            // حفظ اللعبة الحالية
+            currentHarakaGame = {
+                letter: randomLetter.letter,
+                letterName: randomLetter.name,
+                correctHaraka: randomHaraka.id,
+                harakaName: randomHaraka.name,
+                harakaSymbol: randomHaraka.symbol
+            };
+            
+            // تحديث الواجهة
+            letterToMarkElement.textContent = randomLetter.letter;
+            gameInstructionElement.textContent = `المعلم يقول: ضع ${randomHaraka.name} على هذا الحرف`;
+            
+            // تحديث الإحصائيات
+            harakaTotalQuestions++;
+            harakaTotalQuestionsElement.textContent = harakaTotalQuestions;
+            
+            // إعادة تعليمات النطق
+            harakaGameFeedbackElement.textContent = '';
+            harakaGameFeedbackElement.style.color = '';
+            
+            // إعادة أزرار الخيارات
+            harakaOptionsButtons.forEach(btn => {
+                btn.classList.remove('correct', 'incorrect');
+                btn.disabled = false;
+            });
+            
+            // إعادة تعليمات النطق بعد 1.5 ثانية
+            setTimeout(() => {
+                speakText(`ضع ${randomHaraka.name} على حرف ${randomLetter.name}`);
+            }, 1500);
+        }
+        
+        // التحقق من إجابة لعبة الحركات
+        function checkHarakaGameAnswer(selectedHaraka, buttonElement) {
+            // تعطيل جميع الأزرار بعد الاختيار
+            harakaOptionsButtons.forEach(btn => {
+                btn.disabled = true;
+            });
+            
+            if (selectedHaraka === currentHarakaGame.correctHaraka) {
+                // الإجابة صحيحة
+                buttonElement.classList.add('correct');
+                harakaGameFeedbackElement.textContent = `أحسنت! الإجابة صحيحة: ${currentHarakaGame.harakaName}`;
+                harakaGameFeedbackElement.style.color = '#4CAF50';
+                
+                harakaGameScore += 10;
+                harakaCorrectAnswers++;
+                
+                // تحديث النقاط
+                harakaGameScoreElement.textContent = harakaGameScore;
+                harakaCorrectAnswersElement.textContent = harakaCorrectAnswers;
+                
+                // تشجيع الطفل
+                setTimeout(() => {
+                    const encouragements = [
+                        `أحسنت يا ${childName}!`,
+                        `ممتاز يا ${childName}!`,
+                        `رائع يا ${childName}!`,
+                        `إجابة صحيحة يا ${childName}!`,
+                        `عظيم يا ${childName}!`
+                    ];
+                    const randomEncouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+                    speakText(randomEncouragement);
+                }, 500);
+                
+            } else {
+                // الإجابة خاطئة
+                buttonElement.classList.add('incorrect');
+                harakaGameFeedbackElement.textContent = `ليس صحيح! الإجابة الصحيحة هي: ${currentHarakaGame.harakaName}`;
+                harakaGameFeedbackElement.style.color = '#F44336';
+                
+                // إظهار الإجابة الصحيحة
+                harakaOptionsButtons.forEach(btn => {
+                    if (btn.dataset.haraka === currentHarakaGame.correctHaraka) {
+                        btn.classList.add('correct');
+                    }
+                });
+                
+                // تشجيع الطفل للمحاولة القادمة
+                setTimeout(() => {
+                    speakText(`حاول مرة أخرى يا ${childName}!`);
+                }, 500);
+            }
+            
+            // إنشاء لعبة جديدة بعد 3 ثوانٍ
+            setTimeout(() => {
+                createHarakaGame();
+            }, 3000);
         }
         
         // تحديث عرض كل الحروف
@@ -1313,6 +2210,12 @@
                     currentLetterIndex = index;
                     updateLetter();
                     switchTab('learn');
+                    
+                    // تأثير عند النقر على الحرف
+                    letterCard.classList.add('celebration');
+                    setTimeout(() => {
+                        letterCard.classList.remove('celebration');
+                    }, 500);
                 });
                 allLettersContainer.appendChild(letterCard);
             });
@@ -1357,31 +2260,39 @@
             updateLetter();
         }
         
+        // فتح إنشودة الحركة في YouTube
+        function openHarakaSong(videoUrl) {
+            window.open(videoUrl, '_blank');
+        }
+        
         // الانتقال للحرف السابق
         function prevLetter() {
             currentLetterIndex = (currentLetterIndex - 1 + arabicLetters.length) % arabicLetters.length;
             updateLetter();
+            
+            // تأثير عند الانتقال
+            prevLetterButton.classList.add('celebration');
+            setTimeout(() => {
+                prevLetterButton.classList.remove('celebration');
+            }, 300);
         }
         
         // الانتقال للحرف التالي
         function nextLetter() {
             currentLetterIndex = (currentLetterIndex + 1) % arabicLetters.length;
             updateLetter();
+            
+            // تأثير عند الانتقال
+            nextLetterButton.classList.add('celebration');
+            setTimeout(() => {
+                nextLetterButton.classList.remove('celebration');
+            }, 300);
         }
         
-        // سؤال "أين حرف؟" في اللعبة
-        function askAboutLetterInGame() {
-            const randomIndex = Math.floor(Math.random() * arabicLetters.length);
-            const randomLetter = arabicLetters[randomIndex];
-            
-            speakText(`يا ${childName}، أين حرف ${randomLetter.name}؟`);
-            
-            // إبراز الحرف في اللعبة
-            gameQuestionElement.textContent = `أين حرف ${randomLetter.name}؟`;
-            correctAnswer = randomLetter.letter;
-            
-            // إنشاء خيارات جديدة
-            const options = [randomLetter.letter];
+        // توليد خيارات اللعبة
+        function generateGameOptions() {
+            // توليد خيارات للحروف
+            const options = [correctAnswer];
             
             // إضافة 3 حروف عشوائية أخرى كخيارات خاطئة
             while (options.length < 4) {
@@ -1404,58 +2315,13 @@
                 button.addEventListener('click', () => checkAnswer(option, button));
                 gameOptionsElement.appendChild(button);
             });
-            
+        }
+        
+        // إنشاء لعبة حسب النمط المحدد
+        function generateGame() {
             gameFeedbackElement.textContent = '';
             gameFeedbackElement.style.color = '';
-        }
-        
-        // إنشاء تأثيرات القلوب الطائرة
-        function createFlyingHearts(count) {
-            const colors = ['#FF6B6B', '#FFD700', '#4CAF50', '#9C27B0', '#2196F3'];
             
-            for (let i = 0; i < count; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.innerHTML = '❤️';
-                heart.style.left = `${Math.random() * 100}vw`;
-                heart.style.top = `${Math.random() * 50 + 50}vh`;
-                heart.style.fontSize = `${Math.random() * 2 + 1.5}rem`;
-                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-                heart.style.animationDuration = `${Math.random() * 2 + 2}s`;
-                
-                document.body.appendChild(heart);
-                
-                // إزالة القلب بعد انتهاء الرسوم المتحركة
-                setTimeout(() => {
-                    heart.remove();
-                }, 3000);
-            }
-        }
-        
-        // إنشاء تأثيرات الألعاب النارية
-        function createFireworks(count) {
-            const colors = ['#FF6B6B', '#FFD700', '#4CAF50', '#9C27B0', '#2196F3'];
-            
-            for (let i = 0; i < count; i++) {
-                const firework = document.createElement('div');
-                firework.className = 'firework';
-                firework.style.left = `${Math.random() * 100}vw`;
-                firework.style.top = `${Math.random() * 50 + 50}vh`;
-                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                firework.style.boxShadow = `0 0 10px ${colors[Math.floor(Math.random() * colors.length)]}`;
-                firework.style.animationDuration = `${Math.random() * 0.5 + 0.5}s`;
-                
-                document.body.appendChild(firework);
-                
-                // إزالة الألعاب النارية بعد انتهاء الرسوم المتحركة
-                setTimeout(() => {
-                    firework.remove();
-                }, 1000);
-            }
-        }
-        
-        // إنشاء لعبة اختيار الحرف
-        function generateGame() {
             // اختيار حرف عشوائي للحصول على سؤال متنوع
             const randomIndex = Math.floor(Math.random() * arabicLetters.length);
             const questionLetter = arabicLetters[randomIndex];
@@ -1471,37 +2337,11 @@
             const randomQuestion = questionTypes[Math.floor(Math.random() * questionTypes.length)];
             gameQuestionElement.textContent = randomQuestion;
             
-            // إنشاء خيارات عشوائية
-            const options = [questionLetter.letter];
-            
-            // إضافة 3 حروف عشوائية أخرى كخيارات خاطئة
-            while (options.length < 4) {
-                const randomIndex = Math.floor(Math.random() * arabicLetters.length);
-                const randomLetter = arabicLetters[randomIndex].letter;
-                if (!options.includes(randomLetter)) {
-                    options.push(randomLetter);
-                }
-            }
-            
-            // خلط الخيارات عشوائياً
-            shuffleArray(options);
-            
-            // إضافة الخيارات إلى واجهة اللعبة
-            gameOptionsElement.innerHTML = '';
-            options.forEach(option => {
-                const button = document.createElement('button');
-                button.className = 'game-option';
-                button.textContent = option;
-                button.addEventListener('click', () => checkAnswer(option, button));
-                gameOptionsElement.appendChild(button);
-            });
-            
-            gameFeedbackElement.textContent = '';
-            gameFeedbackElement.style.color = '';
+            generateGameOptions();
         }
         
         // التحقق من الإجابة
-        function checkAnswer(selectedLetter, buttonElement) {
+        function checkAnswer(selectedOption, buttonElement) {
             const options = document.querySelectorAll('.game-option');
             
             // تعطيل جميع الأزرار بعد الاختيار
@@ -1512,7 +2352,7 @@
             questionsAnswered++;
             questionsAnsweredElement.textContent = questionsAnswered;
             
-            if (selectedLetter === correctAnswer) {
+            if (selectedOption === correctAnswer) {
                 // الإجابة صحيحة
                 buttonElement.classList.add('correct');
                 gameFeedbackElement.textContent = 'إجابة صحيحة! أحسنت!';
@@ -1536,20 +2376,13 @@
                 // تأثير النجاح
                 gameQuestionElement.classList.add('celebration');
                 
-                // إنشاء تأثيرات القلوب الطائرة والألعاب النارية
-                createFlyingHearts(15);
-                createFireworks(20);
-                
-                // تشغيل صوت نجاح
-                playSuccessSound();
-                
                 setTimeout(() => {
                     gameQuestionElement.classList.remove('celebration');
                 }, 500);
             } else {
                 // الإجابة خاطئة
                 buttonElement.classList.add('incorrect');
-                gameFeedbackElement.textContent = `ليس صحيح! الإجابة هي: ${correctAnswer}`;
+                gameFeedbackElement.textContent = `ليس صحيح! الإجابة الصحيحة هي: ${correctAnswer}`;
                 gameFeedbackElement.style.color = '#F44336';
                 
                 // تشجيع الطفل للنجاح القادم
@@ -1582,39 +2415,6 @@
             }, 3000);
         }
         
-        // تشغيل صوت النجاح
-        function playSuccessSound() {
-            // إنشاء صوت نجاح باستخدام Web Audio API
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // نغمة مرحة للأطفال
-                const playNote = (frequency, startTime, duration) => {
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    
-                    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime + startTime);
-                    
-                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime + startTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + startTime + duration);
-                    
-                    oscillator.start(audioContext.currentTime + startTime);
-                    oscillator.stop(audioContext.currentTime + startTime + duration);
-                };
-                
-                // نغمة سعيدة للأطفال
-                playNote(523.25, 0, 0.2);  // C5
-                playNote(659.25, 0.2, 0.2); // E5
-                playNote(783.99, 0.4, 0.3); // G5
-                
-            } catch (e) {
-                console.log('Web Audio API غير مدعوم في هذا المتصفح');
-            }
-        }
-        
         // بدء لعبة جديدة
         function newGame() {
             gameScore = 0;
@@ -1624,9 +2424,28 @@
             correctAnswersElement.textContent = correctAnswers;
             questionsAnsweredElement.textContent = questionsAnswered;
             generateGame();
+            
+            // تأثير عند بدء لعبة جديدة
+            newGameButton.classList.add('celebration');
+            setTimeout(() => {
+                newGameButton.classList.remove('celebration');
+            }, 500);
         }
         
-        // تبديل التبويبات
+        // سؤال "أين حرف؟" في اللعبة
+        function askAboutLetterInGame() {
+            const randomIndex = Math.floor(Math.random() * arabicLetters.length);
+            const randomLetter = arabicLetters[randomIndex];
+            
+            speakText(`يا ${childName}، أين حرف ${randomLetter.name}؟`);
+            
+            // إبراز الحرف في اللعبة
+            gameQuestionElement.textContent = `أين حرف ${randomLetter.name}؟`;
+            correctAnswer = randomLetter.letter;
+            generateGameOptions();
+        }
+        
+        // تبديل التبويبات الرئيسية
         function switchTab(tabName) {
             tabs.forEach(tab => {
                 if (tab.dataset.tab === tabName) {
@@ -1644,12 +2463,55 @@
                 }
             });
             
+            if (tabName === 'harakat') {
+                // إنشاء لعبة الحركات عند التبديل إلى قسم الحركات
+                createHarakaGame();
+            }
+            
             if (tabName === 'game') {
                 generateGame();
             }
+            
+            // تأثير عند تغيير التبويب
+            const activeTab = document.querySelector(`.tab[data-tab="${tabName}"]`);
+            activeTab.classList.add('celebration');
+            setTimeout(() => {
+                activeTab.classList.remove('celebration');
+            }, 300);
         }
         
-        // دخل لخلط المصفوفة عشوائياً
+        // تبديل التبويبات الفرعية في قسم الحركات
+        function switchHarakatTab(tabName) {
+            harakatTabs.forEach(tab => {
+                if (tab.dataset.harakatTab === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            harakatContents.forEach(content => {
+                if (content.id === `${tabName}-content`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+            
+            // إذا كان التبويب هو التدريب، أنشئ لعبة جديدة
+            if (tabName === 'training') {
+                createHarakaGame();
+            }
+            
+            // تأثير عند تغيير التبويب
+            const activeTab = document.querySelector(`.harakat-tab[data-harakat-tab="${tabName}"]`);
+            activeTab.classList.add('celebration');
+            setTimeout(() => {
+                activeTab.classList.remove('celebration');
+            }, 300);
+        }
+        
+        // دالة لخلط المصفوفة عشوائياً
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1664,13 +2526,82 @@
         videoPreviewElement.addEventListener('click', openYouTubeVideo);
         prevLetterButton.addEventListener('click', prevLetter);
         nextLetterButton.addEventListener('click', nextLetter);
+        
+        // النقر على صورة الأنشودة لفتح الفيديو
+        document.querySelectorAll('.song-video-preview').forEach(preview => {
+            preview.addEventListener('click', function() {
+                // نحدد أي فيديو يجب فتحه بناءً على التبويب النشط
+                const activeTab = document.querySelector('.harakat-tab.active');
+                if (activeTab) {
+                    const tabName = activeTab.dataset.harakatTab;
+                    let videoUrl = '';
+                    
+                    switch(tabName) {
+                        case 'fatha':
+                            videoUrl = 'https://www.youtube.com/watch?v=yp1TQimMjqA';
+                            break;
+                        case 'kasra':
+                            videoUrl = 'https://www.youtube.com/watch?v=6D0b82CpqoE';
+                            break;
+                        case 'damma':
+                            videoUrl = 'https://www.youtube.com/watch?v=w3Mn3bJFoA8';
+                            break;
+                    }
+                    
+                    if (videoUrl) {
+                        openHarakaSong(videoUrl);
+                    }
+                }
+            });
+        });
+        
+        // أحداث لعبة وضع الحركات
+        harakaOptionsButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    checkHarakaGameAnswer(this.dataset.haraka, this);
+                }
+            });
+        });
+        
+        // زر سؤال جديد في لعبة الحركات
+        newHarakaGameButton.addEventListener('click', function() {
+            createHarakaGame();
+            this.classList.add('celebration');
+            setTimeout(() => {
+                this.classList.remove('celebration');
+            }, 500);
+        });
+        
+        // زر سماع التعليمات في لعبة الحركات
+        hearInstructionButton.addEventListener('click', function() {
+            if (currentHarakaGame) {
+                speakText(`ضع ${currentHarakaGame.harakaName} على حرف ${currentHarakaGame.letterName}`);
+            }
+        });
+        
+        // النقر على الحرف لسماع التعليمات في لعبة الحركات
+        letterToMarkElement.addEventListener('click', function() {
+            if (currentHarakaGame) {
+                speakText(`ضع ${currentHarakaGame.harakaName} على حرف ${currentHarakaGame.letterName}`);
+            }
+        });
+        
+        // أحداث لعبة الحروف
         newGameButton.addEventListener('click', newGame);
         askLetterGameButton.addEventListener('click', askAboutLetterInGame);
         
-        // إضافة مستمعي الأحداث للتبويبات
+        // إضافة مستمعي الأحداث للتبويبات الرئيسية
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 switchTab(tab.dataset.tab);
+            });
+        });
+        
+        // إضافة مستمعي الأحداث للتبويبات الفرعية في قسم الحركات
+        harakatTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchHarakatTab(tab.dataset.harakatTab);
             });
         });
         
@@ -1678,11 +2609,26 @@
         updateLetter();
         updateAllLettersDisplay();
         
+        // إنشاء بطاقات الحروف مع الحركات
+        createHarakaCards('fatha-cards', lettersWithFatha);
+        createHarakaCards('kasra-cards', lettersWithKasra);
+        createHarakaCards('damma-cards', lettersWithDamma);
+        
+        // إنشاء لعبة الحركات عند البدء
+        createHarakaGame();
+        
         // إضافة تأثيرات تفاعلية إضافية
         currentLetterElement.addEventListener('click', playLetterSound);
         
         // ترتيب النص في حقل الإدخال عند تحميل الصفحة
         childNameInput.focus();
+        
+        // تشغيل صوت ترحيبي عند تحميل الصفحة
+        setTimeout(() => {
+            if (!nameInputScreen.classList.contains('hidden')) {
+                speakText("مرحباً! أدخل اسمك الجميل لنبدأ التعلم معاً");
+            }
+        }, 1000);
     </script>
 </body>
 </html>
